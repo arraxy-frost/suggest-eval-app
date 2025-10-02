@@ -2,7 +2,8 @@ import { Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
 import Vote from "./vote.model";
 
 @Table({
-    tableName: "suggestions"
+    tableName: "suggestions",
+    paranoid: true
 })
 export default class Suggestion extends Model {
     @Column({

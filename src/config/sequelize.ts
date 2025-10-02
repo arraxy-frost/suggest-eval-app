@@ -12,7 +12,8 @@ const sequelize = new Sequelize(
         port: parseInt(process.env.DB_PORT || "5432"),
         dialect: "postgres",
         models: [__dirname + '/../models'],
-        logging: process.env.NODE_ENV === "dev" ? console.log : false,
+        // logging: process.env.NODE_ENV === "dev" ? console.log : false,
+        logging: false,
         define: {
             timestamps: true
         }

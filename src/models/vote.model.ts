@@ -13,7 +13,6 @@ export default class Vote extends Model {
     })
     id: number;
 
-    // IP Address
     @Column({
         type: DataType.STRING(45),
         validate: {
