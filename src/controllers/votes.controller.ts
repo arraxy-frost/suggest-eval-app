@@ -1,13 +1,19 @@
 import { Request, Response } from "express";
+import { normalizeIp } from "../utils/normalize-ip";
 
 export class VotesController {
     constructor() {
         console.log('Init voting controller');
     }
 
-    sayHi = async (req: Request, res: Response) => {
-        return res.json({
-            message: "Hello from Voting Controller!"
+    addVote = async (req: Request, res: Response) => {
+        const clientIp = normalizeIp(req.ip)
+        const allIps = req.ips.map(normalizeIp);
+
+        res.json({
+            ip: clientIp,
+            ips: allIps,
+            raw: req.socket.remoteAddress
         });
     }
 }
