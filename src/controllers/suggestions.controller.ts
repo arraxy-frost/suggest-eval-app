@@ -9,6 +9,21 @@ export default class SuggestionsController {
         this.suggestionsService = new SuggestionService();
     }
 
+    getAllSuggestions = async (req: Request, res: Response) => {
+        const result = await this.suggestionsService.getAllSuggestions();
+
+        return res.json({
+            success: true,
+            data: result
+        });
+    }
+
+    searchSuggestions = async (req: Request, res: Response) => {
+        const { limit = 10, page = 1} = req.body;
+
+        return res.json(await this.suggestionsService.searchSuggestions(limit, page));
+    }
+
     createSuggestion = async (req: Request, res: Response) => {
         const { title, description } = req.body;
 
@@ -20,15 +35,6 @@ export default class SuggestionsController {
         }
 
         const result = await this.suggestionsService.createSuggestion(title, description);
-
-        return res.json({
-            success: true,
-            data: result
-        });
-    }
-
-    getAllSuggestions = async (req: Request, res: Response) => {
-        const result = await this.suggestionsService.getAllSuggestions();
 
         return res.json({
             success: true,

@@ -1,8 +1,8 @@
 import express, { Router } from "express";
-import { VotingController } from "../controllers/voting.controller";
+import { VotesController } from "../controllers/votes.controller";
 
 const router = express.Router();
-const votingController = new VotingController();
+const votingController = new VotesController();
 
 router.get('/', votingController.sayHi);
 

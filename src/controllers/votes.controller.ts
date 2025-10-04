@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 
-export class VotingController {
+export class VotesController {
     constructor() {
         console.log('Init voting controller');
     }
 
-    sayHi(req: Request, res: Response) {
+    sayHi = async (req: Request, res: Response) => {
         return res.json({
             message: "Hello from Voting Controller!"
         });

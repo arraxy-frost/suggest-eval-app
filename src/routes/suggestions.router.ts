@@ -6,6 +6,7 @@ const suggestionsController = new SuggestionsController();
 
 router.get('/', suggestionsController.getAllSuggestions);
 router.post('/', suggestionsController.createSuggestion);
+router.post('/search', suggestionsController.searchSuggestions);
 router.delete('/:id', suggestionsController.deleteSuggestion);
 router.patch('/:id', suggestionsController.updateSuggestion);
 
