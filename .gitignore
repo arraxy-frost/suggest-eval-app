@@ -137,3 +137,13 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+
+# --- Frontend (React + Vite in client-app) ---
+client-app/node_modules/
+client-app/dist/
+client-app/.vite/
+client-app/*.log
+client-app/.env
+client-app/.env.local
+client-app/.env.*.local
