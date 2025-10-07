@@ -4,6 +4,10 @@
   "description": "Демонстрационное веб-приложение для оценки предлагаемых идей",
   "main": "index.js",
   "scripts": {
+    "build:client": "cd client-app && npm install && npm run build",
+    "build:server": "tsc",
+    "build": "npm run build:client && npm run build:server",
+    "start": "node dist/server.js",
     "dev": "ts-node-dev src/server.ts"
   },
   "repository": {
