@@ -1,9 +1,14 @@
 import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from "sequelize-typescript";
 import Suggestion from "./suggestion.model";
-import { isIP } from "net";
 
 @Table({
-    tableName: "votes"
+    tableName: "votes",
+    indexes: [
+    {
+        unique: true,
+        fields: ['sender', 'suggestion_id']
+    }
+    ]
 })
 export default class Vote extends Model {
     @Column({
