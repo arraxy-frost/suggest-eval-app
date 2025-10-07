@@ -9,6 +9,18 @@ export default class SuggestionsController {
         this.suggestionsService = new SuggestionService();
     }
 
+    getSuggestion = async (req: Request, res: Response) => {
+        const { suggestionId } = req.params;
+
+        if (!suggestionId) {
+            return res.status(400).json({
+                message: "Suggestion ID is required in URL params"
+            });
+        }
+
+        return res.json(await this.suggestionsService.getSuggestion(Number(suggestionId)));
+    }
+
     getAllSuggestions = async (req: Request, res: Response) => {
         const result = await this.suggestionsService.getAllSuggestions();
 

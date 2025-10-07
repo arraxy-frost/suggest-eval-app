@@ -15,6 +15,34 @@ export default class SuggestionService {
         });
     }
 
+    async getSuggestion(suggestionId: number) {
+        const suggestion = await sequelize.models.Suggestion.findOne({
+            where: {
+                id: suggestionId
+            },
+            include: [
+                {
+                    model: sequelize.models.Vote,
+                    as: 'votes',
+                    attributes: []
+                }
+            ],
+            attributes: {
+                exclude: ['deletedAt'],
+                include: [
+                    [
+                        sequelize.fn('COUNT', sequelize.col('votes.id')),
+                        'votesCount'
+                    ]
+                ]
+            },
+            group: ['Suggestion.id'],
+            subQuery: false
+        });
+
+        return suggestion;
+    }
+
     async createSuggestion(title: string, description: string) {
         return await sequelize.models.Suggestion.create({
             title,
@@ -24,23 +52,38 @@ export default class SuggestionService {
 
     async searchSuggestions(limit: number, page: number): Promise<PaginatedResponse<Suggestion>> {
         const { count, rows } = await sequelize.models.Suggestion.findAndCountAll({
-            limit: limit,
+            limit,
             offset: (page - 1) * limit,
+            include: [
+                {
+                    model: sequelize.models.Vote,
+                    as: 'votes',
+                    attributes: []
+                }
+            ],
             attributes: {
-                exclude: ['deletedAt']
-            }
-        })
+                exclude: ['deletedAt'],
+                include: [
+                    [
+                        sequelize.fn('COUNT', sequelize.col('votes.id')),
+                        'votesCount'
+                    ]
+                ]
+            },
+            group: ['Suggestion.id'],
+            subQuery: false
+        });
 
         return {
-            count,
+            count: Array.isArray(count) ? count.length : count, // count может быть массивом при group
             limit,
             page,
-            totalPages: Math.ceil(count / limit),
+            totalPages: Math.ceil(
+            (Array.isArray(count) ? count.length : count) / limit
+            ),
             rows
         } as PaginatedResponse<Suggestion>;
     }
-
-
 
     async deleteSuggestion(id: number) {
         return await sequelize.models.Suggestion.destroy({
