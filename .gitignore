@@ -147,3 +147,4 @@ client-app/*.log
 client-app/.env
 client-app/.env.local
 client-app/.env.*.local
+public/*
